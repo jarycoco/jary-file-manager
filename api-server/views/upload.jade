@@ -1,0 +1,7 @@
+extends layout
+
+block content
+    form(action="/upload", method="post" enctype="multipart/form-data")
+        input(type="hidden", name="path", value="C:\\Users\\JJJ\\Documents\\zzam")
+        input(type="file", name="userfile")
+        button(type="submit") 전송
