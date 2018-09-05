@@ -1,5 +1,5 @@
 <template >
-  <b-table :fields="fields" :items="items" class="text-sm" fixed>
+  <b-table hover  :fields="fields" :items="items" class="text-sm"  @row-clicked="clicked" @row-hovered="hovered" small>
         <template slot="type" slot-scope="data">
 <v-icon >{{data.value}} </v-icon>
     </template>
@@ -8,9 +8,9 @@
       <a :href="`#/?path=`+$route.query.path+'\\'+data.value" v-if="data.item.dir" >
         {{data.value}} 
       </a>
-      <span :href="`#/?path=`+$route.query.path+'\\'+data.value" v-else >
+      <a :href="`http://localhost:3000/download?path=`+$route.query.path+'\\'+data.value" v-else >
         {{data.value}} 
-      </span>
+      </a>
     </template>
   </b-table>
 </template>
@@ -43,10 +43,11 @@ export default {
         {
           // A virtual column with custom formatter
           key: "birthTime",
-          class:"w15",
+          class:"w30",
           label: "생성일자"
         }
-      ]
+      ],
+      bfr:null
     };
   },
   async mounted() {
@@ -61,6 +62,7 @@ export default {
   watch: {
     // 같은 route 이지만 params 가 달라질 경우 실행된다.
     $route(to, from) {
+      if(this.bfr) this.bfr.className = ''
       this.update();
     }
   },
@@ -68,7 +70,7 @@ export default {
     async update() {
       let url;
       if (!this.$route.query.path) this.$route.query.path = "";
-      url = "http://jary.kro.kr:3000/info?path=" + this.$route.query.path;
+      url = "http://localhost:3000/info?path=" + this.$route.query.path;
 
       let info = await this.$http.get(url);
       this.items = info.data;
@@ -92,6 +94,15 @@ export default {
       console.log(this.items);
 
       console.log(info.data);
+    },
+    clicked(item,index,event){
+      if(this.bfr) this.bfr.className = ''
+      event.path[1].className = 'select'
+      this.bfr = event.path[1]
+      this.bus.$emit('preview',this.$route.query.path,item)
+    },
+    hovered(item,index,event){
+      this.bus.$emit('preview',this.$route.query.path,item)
     }
   }
 };
@@ -104,8 +115,14 @@ a {
 .w15{
   width:15%;
 }
+.w30{
+  width:30%;
+}
 .w40{
   width:40%;
+}
+.select{
+  background-color:rgb(221, 221, 221)
 }
 </style>
 

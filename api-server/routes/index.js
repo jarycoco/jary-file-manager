@@ -2,7 +2,7 @@ var express = require('express');
 var fm = require('../component/file-manager')
 var router = express.Router();
 
-var base = 'C:\\Users\\jojeongje\\Desktop\\'
+var base = 'C:\\Users\\JJJ\\Desktop\\'
 
 var multer = require('multer'); // express에 multer모듈 적용 (for 파일업로드)
 var storage = multer.diskStorage({

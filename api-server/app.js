@@ -9,7 +9,7 @@ var usersRouter = require('./routes/users');
 var CORS = require('cors')();
 var app = express();
 
-var base = 'C:\\Users\\jojeongje\\Desktop'
+var base = 'C:\\Users\\JJJ\\Desktop'
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

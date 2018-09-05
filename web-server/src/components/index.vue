@@ -17,6 +17,10 @@
       <v-flex xs12 sm12 md8 xl8>
 <fileTable></fileTable>
       </v-flex>
+            <v-flex xs12 sm6 md2 xl2>
+<preview></preview>
+      </v-flex>
+
     </v-layout>
   </v-container>
 
@@ -27,9 +31,10 @@
 import fileTable from "./table";
 import upload from "./upload";
 import mybreadcrumbs from "./breadcrumbs";
+import preview from "./preview";
 export default {
   name: 'HelloWorld',
-  components:{fileTable,upload,mybreadcrumbs},
+  components:{fileTable,upload,mybreadcrumbs,preview},
   data () {
     return {
       msg: '유하'
