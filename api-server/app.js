@@ -6,18 +6,35 @@ var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-
+var CORS = require('cors')();
 var app = express();
+
+var base = 'C:\\Users\\jojeongje\\Desktop'
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
+
+app.use(CORS);
+
+var allowCORS = function(req, res, next) {
+  res.header('Acess-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE, OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With');
+  (req.method === 'OPTIONS') ?
+    res.send(200) :
+    next();
+};
+ 
+// ?씠 遺?遺꾩?? app.use(router) ?쟾?뿉 異붽???븯?룄濡? ?븯?옄
+app.use(allowCORS);
 
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(base));
 app.use('/upload',express.static('/uploads'));
 
 app.use('/', indexRouter);
@@ -37,6 +54,10 @@ app.use(function(err, req, res, next) {
   // render the error page
   res.status(err.status || 500);
   res.render('error');
+});
+
+process.on('uncaughtException', function(err) {
+  console.log('Caught exception: ' + err);
 });
 
 module.exports = app;
