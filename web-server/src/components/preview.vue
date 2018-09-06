@@ -23,7 +23,7 @@ export default {
     this.bus.$on(
       "preview",
       function(path, item) {
-        let file = "http://localhost:3000";
+        let file = `${this.$store.state.server_ip}`;
         if (path != "") {
           file += path;
         }

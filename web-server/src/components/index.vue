@@ -9,7 +9,7 @@
       </v-flex>
     </v-layout>
     <v-layout row wrap justify-center>
-      <v-flex xs12 sm12 md8 xl8>
+      <v-flex xs12 sm12 md10 xl10>
         <mybreadcrumbs></mybreadcrumbs>
       </v-flex>
     </v-layout>

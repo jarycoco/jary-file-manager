@@ -8,8 +8,9 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var CORS = require('cors')();
 var app = express();
+var homedir = require('homedir')
 
-var base = 'C:\\Users\\JJJ\\Desktop'
+var base = homedir();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -26,7 +27,7 @@ var allowCORS = function(req, res, next) {
     next();
 };
  
-// ?ì”  éº?éºê¾©?? app.use(router) ?ìŸ¾?ë¿‰ ç•°ë¶½???ë¸¯?ë£„æ¿¡? ?ë¸¯?ì˜„
+// ??”  ?º??ºê¾??? app.use(router) ??Ÿ¾?ë¿? ?•°ë¶????ë¸??ë£„æ¿¡? ?ë¸???˜„
 app.use(allowCORS);
 
 app.use(logger('dev'));

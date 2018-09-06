@@ -8,7 +8,7 @@
       <a :href="`#/?path=`+$route.query.path+'\\'+data.value" v-if="data.item.dir" >
         {{data.value}} 
       </a>
-      <a :href="`http://localhost:3000/download?path=`+$route.query.path+'\\'+data.value" v-else >
+      <a :href="`${$store.state.server_ip}/download?path=`+$route.query.path+'\\'+data.value" v-else >
         {{data.value}} 
       </a>
     </template>
@@ -70,15 +70,11 @@ export default {
     async update() {
       let url;
       if (!this.$route.query.path) this.$route.query.path = "";
-      url = "http://localhost:3000/info?path=" + this.$route.query.path;
+      console.log(this.$store.state.server_ip)
+      url = `${this.$store.state.server_ip}/info?path=` + this.$route.query.path;
 
       let info = await this.$http.get(url);
       this.items = info.data;
-      for (var item of this.items) {
-        if (item.dir) item.type = "fas fa-folder-open";
-        else item.type = "fas fa-file";
-        item.birthTime = new Date(item.birthTime).toLocaleString();
-      }
 
       this.items.sort(function(a, b) {
         if (a.size < b.size) {
@@ -90,6 +86,14 @@ export default {
         // a must be equal to b
         return 0;
       });
+
+      for (var item of this.items) {
+        if (item.dir) item.type = "fas fa-folder-open";
+        else item.type = "fas fa-file";
+        item.birthTime = new Date(item.birthTime).toLocaleString();
+        item.size = this.size(item.size)
+      }
+
 
       console.log(this.items);
 
@@ -103,6 +107,24 @@ export default {
     },
     hovered(item,index,event){
       this.bus.$emit('preview',this.$route.query.path,item)
+    },
+    size(sz){
+      const KB = 1000
+      const MB = KB * 1000
+      const GB = MB * 1000
+      if(sz > GB){
+        sz = (sz/GB).toFixed(2)+'GB'
+      }
+      else if(sz > MB){
+        sz = (sz/MB).toFixed(2)+'MB'
+      }
+      else if(sz > KB){
+        sz = (sz/KB).toFixed(2)+'KB'
+      }
+      else{
+        sz = sz + 'B'
+      }
+      return sz
     }
   }
 };

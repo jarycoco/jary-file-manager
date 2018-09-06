@@ -1,8 +1,9 @@
 var express = require('express');
 var fm = require('../component/file-manager')
 var router = express.Router();
+var homedir = require('homedir')
 
-var base = 'C:\\Users\\JJJ\\Desktop\\'
+var base = homedir();
 
 var multer = require('multer'); // express에 multer모듈 적용 (for 파일업로드)
 var storage = multer.diskStorage({
@@ -13,7 +14,8 @@ var storage = multer.diskStorage({
     cb(null, file.originalname) // cb 콜백함수를 통해 전송된 파일 이름 설정
   }
 })
-var upload = multer({ storage: storage })
+
+var upload = multer({ storage: storage})
 
 
 /* GET home page. */
