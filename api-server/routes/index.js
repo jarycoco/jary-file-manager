@@ -3,7 +3,10 @@ var fm = require('../component/file-manager')
 var router = express.Router();
 var homedir = require('homedir')
 
-var base = homedir();
+const args = process.argv;
+
+if(args[2]) var base = args[2]
+else var base = homedir();
 
 var multer = require('multer'); // express에 multer모듈 적용 (for 파일업로드)
 var storage = multer.diskStorage({
@@ -16,7 +19,6 @@ var storage = multer.diskStorage({
 })
 
 var upload = multer({ storage: storage})
-
 
 /* GET home page. */
 router.get('/', function(req, res, next) {

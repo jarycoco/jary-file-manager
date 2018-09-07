@@ -10,7 +10,12 @@ var CORS = require('cors')();
 var app = express();
 var homedir = require('homedir')
 
-var base = homedir();
+const args = process.argv;
+
+if(args[2]) var base = args[2]
+else var base = homedir();
+
+console.log(base)
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -27,7 +32,7 @@ var allowCORS = function(req, res, next) {
     next();
 };
  
-// ??”  ?º??ºê¾??? app.use(router) ??Ÿ¾?ë¿? ?•°ë¶????ë¸??ë£„æ¿¡? ?ë¸???˜„
+// ??ï¿½ï¿½ ?ï¿½ï¿½??ï¿½ï¿½ï¿½??? app.use(router) ??ï¿½ï¿½?ï¿½? ?ï¿½ï¿½ï¿½????ï¿½??ë£„æ¿¡? ?ï¿½???ï¿½ï¿½
 app.use(allowCORS);
 
 app.use(logger('dev'));
