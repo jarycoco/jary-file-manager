@@ -7,10 +7,9 @@ exports.getFileInfoFromFolder = function getFileInfoFromFolder(route) {
   const response = [];
   for (let file of files) {
     const extension = path.extname(file);
-    const info = fs.statSync(route+'\\'+file);
+    const info = fs.statSync(route+'/'+file);
     response.push({ name: file, extension, dir:info.isDirectory(),size:info.size,birthTime:info.birthtime });
   }
   console.log(response)
   return response;
 }
-

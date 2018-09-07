@@ -30,12 +30,12 @@ export default {
               }]
           console.log(path)
           if(path){
-          let arr = path.split('\\')
+          let arr = path.split('/')
           console.log(arr)
           let stack = ''
           for (const item of arr) {
               if(item=="") continue;
-              stack += '\\' + item
+              stack += '/' + item
               let obj = {
                   text:item,
                   href:'#/?path='+stack

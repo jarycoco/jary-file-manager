@@ -5,10 +5,10 @@
     </template>
 
     <template slot="name" slot-scope="data">
-      <a :href="`#/?path=`+$route.query.path+'\\'+data.value" v-if="data.item.dir" >
+      <a :href="`#/?path=`+$route.query.path+'/'+data.value" v-if="data.item.dir" >
         {{data.value}} 
       </a>
-      <a :href="`${$store.state.server_ip}/download?path=`+$route.query.path+'\\'+data.value" v-else >
+      <a :href="`${$store.state.server_ip}/download?path=`+$route.query.path+'/'+data.value" v-else >
         {{data.value}} 
       </a>
     </template>
